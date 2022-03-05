@@ -63,20 +63,23 @@ void setup()
               switch (mode)
               {
               case 0:
-                /* code */
+                // off
                 strip.clear();
                 break;
-              
               case 1:
+                // r
                 strip.fill(strip.Color(255, 0, 0));
                 break;
               case 2:
+                // g
                 strip.fill(strip.Color(0, 255, 0));
                 break;
               case 3:
+                 // b
                 strip.fill(strip.Color(0, 0, 255));
                 break;
               case 4:
+                // blend
                 strip.fill(strip.Color(127, 127, 127));
                 break;
               default:
@@ -85,32 +88,20 @@ void setup()
               }
 
               strip.show();
-
-              String modeStr = String(mode);
-              request->send(200, "text/plain", "mode: " + modeStr); });
-
-  // Send a GET request to <IP>/get?message=<message>
-  server.on("/get", HTTP_GET, [](AsyncWebServerRequest *request)
-            {
-        String message;
-        if (request->hasParam(PARAM_MESSAGE)) {
-            message = request->getParam(PARAM_MESSAGE)->value();
-        } else {
-            message = "No message sent";
-        }
-
-        request->send(200, "text/plain", "Hello, GET: " + message); });
+      
+              request->send(200, "text/plain", "mode: " +  String(mode)); });
 
   // Send a POST request to <IP>/post with a form field message set to <message>
-  server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request)
-            {
-        String message;
-        if (request->hasParam(PARAM_MESSAGE, true)) {
-            message = request->getParam(PARAM_MESSAGE, true)->value();
-        } else {
-            message = "No message sent";
-        }
-        request->send(200, "text/plain", "Hello, POST: " + message); });
+  // example post.
+  // server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request)
+  //           {
+  //       String message;
+  //       if (request->hasParam(PARAM_MESSAGE, true)) {
+  //           message = request->getParam(PARAM_MESSAGE, true)->value();
+  //       } else {
+  //           message = "No message sent";
+  //       }
+  //       request->send(200, "text/plain", "Hello, POST: " + message); });
 
   server.onNotFound(notFound);
 
